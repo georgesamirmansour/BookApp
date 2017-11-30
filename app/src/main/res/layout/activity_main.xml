@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_dark"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="9dp"
     tools:context="com.example.gogos.bookapp.MainActivity">
@@ -21,24 +20,24 @@
         android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:hint="@string/search_filed"
         android:paddingBottom="15dp"
         android:textSize="13sp"
-        android:textStyle="bold"
-        android:id="@+id/search"/>
+        android:textStyle="bold" />
 
     <Button
+        android:id="@+id/search_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:fontFamily="monospace"
+        android:fontFamily="serif-monospace"
         android:paddingTop="12dp"
         android:text="@string/search_name"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:id="@+id/search_button"/>
+        android:textSize="23sp"
+        android:textStyle="italic" />
 
 </LinearLayout>
