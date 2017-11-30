@@ -22,14 +22,14 @@ public class BookListAdaptor extends ArrayAdapter<BookList> {
         View listItemView = convertView;
         if (listItemView == null){
             listItemView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.book_list_items, parent, false);
+                    .inflate(R.layout.book_list_view, parent, false);
         }
         BookList currentBookList = getItem(position);
-        TextView bookTittleTextView = (TextView) listItemView.findViewById(R.id.book_tittle);
+        TextView bookTittleTextView = listItemView.findViewById(R.id.book_tittle);
         bookTittleTextView.setText(currentBookList.getBookTittle());
-        TextView authorTextView = (TextView) listItemView.findViewById(R.id.book_author);
+        TextView authorTextView = listItemView.findViewById(R.id.book_author);
         authorTextView.setText(currentBookList.getBookAuthor());
-        TextView publishedDataTextView = (TextView) listItemView.findViewById(R.id.published_date);
+        TextView publishedDataTextView = listItemView.findViewById(R.id.published_date);
         publishedDataTextView.setText(currentBookList.getPublishedDate());
         return listItemView;
     }

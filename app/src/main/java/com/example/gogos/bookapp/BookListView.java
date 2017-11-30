@@ -1,23 +1,23 @@
 package com.example.gogos.bookapp;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class BookListView extends AppCompatActivity {
 
+    public static final String BookListRequestUrl =
+            "https://www.googleapis.com/books/v1/volumes?q=" + "ios" + "&maxResults=15";
     public static String userSearch = null;
-    private static final String BookListRequestUrl =
-            "https://www.googleapis.com/books/v1/volumes?q=" + userSearch + "&maxResults=15";
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_list_view);
+        setContentView(R.layout.book_list_items);
         BookListAsyncTask bookListAsyncTask = new BookListAsyncTask();
         bookListAsyncTask.execute(BookListRequestUrl);
     }
