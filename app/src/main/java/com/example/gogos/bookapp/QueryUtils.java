@@ -107,9 +107,26 @@ public final class QueryUtils {
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject bookListFeatures = jsonArray.getJSONObject(i);
                 JSONObject volumeInfo = bookListFeatures.getJSONObject("volumeInfo");
-                String bookTittle = volumeInfo.getString("title");
-                String bookAuthor = volumeInfo.getString("authors");
-                String publishedData = volumeInfo.getString("publishedDate");
+                String bookTittle;
+                if (volumeInfo.has("title")) {
+                    bookTittle = volumeInfo.getString("title");
+                } else {
+                    bookTittle = "No Title Found1";
+                }
+
+                String bookAuthor;
+                if (volumeInfo.has("authors")) {
+                    bookAuthor = volumeInfo.getString("authors");
+                } else {
+                    bookAuthor = "No Author Found!";
+                }
+
+                String publishedData;
+                if (volumeInfo.has("publisher")) {
+                    publishedData = volumeInfo.getString("publisher");
+                } else {
+                    publishedData = "No Publish Date Found!";
+                }
                 bookListArrayList.add(new BookList(bookTittle, bookAuthor, publishedData));
             }
         }catch (JSONException e){
