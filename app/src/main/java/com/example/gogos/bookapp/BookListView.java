@@ -17,6 +17,15 @@ public class BookListView extends AppCompatActivity {
     private static String newString = null;
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        BookListAdaptor bookListAdaptor = new BookListAdaptor(getApplicationContext(), bookListArrayList);
+        ListView bookListView = findViewById(R.id.list);
+        bookListAdaptor.clear();
+        bookListArrayList.clear();
+        bookListView.setAdapter(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
