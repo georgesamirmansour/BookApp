@@ -41,7 +41,7 @@ public class BookListView extends AppCompatActivity {
             ProgressBar progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.GONE);
             bookListView.setAdapter(bookListAdaptor);
-            if (bookListView.getAdapter() != null) {
+            if (bookListView.getAdapter() == null) {
                 TextView textView = findViewById(R.id.empty_text);
                 textView.setVisibility(View.VISIBLE);
             }
