@@ -2,6 +2,7 @@ package com.example.gogos.bookapp;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,11 @@ public final class QueryUtils {
 
     public static final String TAG = QueryUtils.class.getSimpleName();
     public static final ArrayList<BookList> bookListArrayList = new ArrayList<>();
+    private static final int readTimeout = 10000;
+    private static final int connectTimeout = 15000;
+    private static final String requestMethod = "GET";
+    private static final int responseCode = 200;
+    private static View view;
 
     private QueryUtils() {
     }
@@ -62,11 +68,11 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
-            connection.setReadTimeout(10000);
-            connection.setConnectTimeout(15000);
-            connection.setRequestMethod("GET");
+            connection.setReadTimeout(readTimeout);
+            connection.setConnectTimeout(connectTimeout);
+            connection.setRequestMethod(requestMethod);
             connection.connect();
-            if (connection.getResponseCode() == 200) {
+            if (connection.getResponseCode() == responseCode) {
                 inputStream = connection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -100,32 +106,35 @@ public final class QueryUtils {
         if (TextUtils.isEmpty(bookListJSON)) {
             return null;
         }
+
+        String bookTittle;
+        String bookAuthor;
+        String publishedData;
         try {
             String jsonResult = fetchBookListData(bookListJSON);
             JSONObject jsonObject = new JSONObject(jsonResult);
-            JSONArray jsonArray = jsonObject.getJSONArray("items");
-            String bookTittle;
-            String bookAuthor;
-            String publishedData;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject bookListFeatures = jsonArray.getJSONObject(i);
-                JSONObject volumeInfo = bookListFeatures.getJSONObject("volumeInfo");
-                if (volumeInfo.getString("title") != null) {
-                    bookTittle = volumeInfo.getString("title");
-                } else {
-                    bookTittle = "No Title Found";
+            JSONArray jsonArray = jsonObject.optJSONArray("items");
+            if (jsonObject.has("items")) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject bookListFeatures = jsonArray.getJSONObject(i);
+                    JSONObject volumeInfo = bookListFeatures.getJSONObject("volumeInfo");
+                    if (volumeInfo.has("title")) {
+                        bookTittle = volumeInfo.getString("title");
+                    } else {
+                        bookTittle = "No Title Found";
+                    }
+                    if (volumeInfo.has("authors")) {
+                        bookAuthor = volumeInfo.getString("authors");
+                    } else {
+                        bookAuthor = "No Author Found";
+                    }
+                    if (volumeInfo.has("publishedDate")) {
+                        publishedData = volumeInfo.getString("publishedDate");
+                    } else {
+                        publishedData = "No Publish Date Found";
+                    }
+                    bookListArrayList.add(new BookList(bookTittle, bookAuthor, publishedData));
                 }
-                if (volumeInfo.getString("authors") != null) {
-                    bookAuthor = volumeInfo.getString("authors");
-                } else {
-                    bookAuthor = "No Author Found";
-                }
-                if (volumeInfo.getString("publishedDate") != null) {
-                    publishedData = volumeInfo.getString("publishedDate");
-                } else {
-                    publishedData = "No Publish Date Found";
-                }
-                bookListArrayList.add(new BookList(bookTittle, bookAuthor, publishedData));
             }
         } catch (JSONException e) {
             Log.e(TAG, "problem in parsing the book list json result: ", e);

@@ -1,35 +1,68 @@
 package com.example.gogos.bookapp;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String userSearch = "";
+    BookList bookList;
+    View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button searchButton = (Button) findViewById(R.id.search_button);
+
+        checkIfConnectedToInternet();
+        Button searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchFiledEditText(v);
-                Intent intent = new Intent(MainActivity.this, BookListView.class);
-                startActivity(intent);
+                if (checkIfConnectedToInternet()) {
+
+                    Toast.makeText(MainActivity.this, getString(R.string.connection) +
+                            checkIfConnectedToInternet(), Toast.LENGTH_SHORT).show();
+                    searchFiledEditText(v);
+                    Intent intent = new Intent(MainActivity.this, BookListView.class);
+                    startActivity(intent);
+                    setEmptyView(v);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.no_internet,
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     public void searchFiledEditText(View view) {
-        EditText searchFiled = (EditText) findViewById(R.id.search);
-        BookListView.userSearch = searchFiled.getText().toString();
+        EditText searchFiled = findViewById(R.id.search);
+        userSearch = searchFiled.getText().toString();
+    }
+
+    public void setEmptyView(View view) {
+        ListView listView = findViewById(R.id.list);
+        TextView emptyTextView = findViewById(R.id.empty_text);
+        listView.setEmptyView(emptyTextView);
+    }
+
+    private boolean checkIfConnectedToInternet() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo =
+                connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = networkInfo
+                != null && networkInfo.isConnectedOrConnecting();
+        return isConnected;
     }
 }

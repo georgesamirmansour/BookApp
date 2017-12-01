@@ -3,15 +3,18 @@ package com.example.gogos.bookapp;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class BookListView extends AppCompatActivity {
 
-    public static String userSearch = null;
+
     public static final String BookListRequestUrl =
-            "https://www.googleapis.com/books/v1/volumes?q=" + userSearch + "&maxResults=15";
+            "https://www.googleapis.com/books/v1/volumes?q=" + MainActivity.userSearch + "&maxResults=15";
 
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
 
@@ -35,7 +38,15 @@ public class BookListView extends AppCompatActivity {
             super.onPostExecute(bookLists);
             BookListAdaptor bookListAdaptor = new BookListAdaptor(getApplicationContext(), bookListArrayList);
             ListView bookListView = findViewById(R.id.list);
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.GONE);
             bookListView.setAdapter(bookListAdaptor);
+            if (bookListView.getAdapter() != null) {
+                TextView textView = findViewById(R.id.empty_text);
+                textView.setVisibility(View.VISIBLE);
+            }
+
         }
+
     }
 }

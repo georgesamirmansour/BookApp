@@ -3,4 +3,8 @@
     <string name="bookApp">welcome to our book store app</string>
     <string name="search_filed">please enter what you searching for </string>
     <string name="search_name">Search</string>
+    <string name="no_data">No data provided ! </string>
+    <string name="no_connection_provided">no connection provided</string>
+    <string name="no_internet">No INTERNET connection provided</string>
+    <string name="connection">connection:</string>
 </resources>
