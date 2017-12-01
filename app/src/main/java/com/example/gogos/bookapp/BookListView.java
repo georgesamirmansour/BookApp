@@ -55,6 +55,7 @@ public class BookListView extends AppCompatActivity {
             return bookListArrayList;
         }
 
+
         protected void onPostExecute(ArrayList<BookList> bookLists) {
             super.onPostExecute(bookLists);
             BookListAdaptor bookListAdaptor = new BookListAdaptor(getApplicationContext(), bookListArrayList);
