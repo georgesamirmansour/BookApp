@@ -1,6 +1,5 @@
 package com.example.gogos.bookapp;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,27 +13,30 @@ import java.util.ArrayList;
 public class BookListView extends AppCompatActivity {
 
 
-    public static final String BookListRequestUrl =
-            "https://www.googleapis.com/books/v1/volumes?q=" + MainActivity.userSearch + "&maxResults=15";
-
+    public static String BookListRequestUrl = null;
+    private static String newString = null;
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        ListView listView = findViewById(R.id.list);
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        listView.notify();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_list_items);
+        if (savedInstanceState == null) {
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                newString = null;
+            } else {
+                newString = bundle.getString("my-string");
+            }
+        } else {
+            newString = (String) savedInstanceState.getSerializable("my-string");
+        }
+        BookListRequestUrl = "https://www.googleapis.com/books/v1/volumes?q=" + newString + "&maxResults=15";
         BookListAsyncTask bookListAsyncTask = new BookListAsyncTask();
         bookListAsyncTask.execute(BookListRequestUrl);
     }
+
 
     private class BookListAsyncTask extends AsyncTask<String, Void, ArrayList<BookList>> {
 

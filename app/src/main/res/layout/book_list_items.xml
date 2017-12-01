@@ -26,23 +26,9 @@
         android:fontFamily="serif-monospace"
         android:text="@string/no_data"
         android:textColor="@android:color/black"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/no_connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:fontFamily="serif-monospace"
-        android:text="@string/no_connection_provided"
-        android:textColor="@android:color/black"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
-
 
 </RelativeLayout>
 

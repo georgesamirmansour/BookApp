@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                             checkIfConnectedToInternet(), Toast.LENGTH_SHORT).show();
                     searchFiledEditText(v);
                     Intent intent = new Intent(MainActivity.this, BookListView.class);
+                    intent.putExtra("my-string", userSearch);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, R.string.no_internet,
