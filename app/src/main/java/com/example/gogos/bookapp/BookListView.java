@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 public class BookListView extends AppCompatActivity {
 
-    public static final String BookListRequestUrl =
-            "https://www.googleapis.com/books/v1/volumes?q=" + "ios" + "&maxResults=15";
     public static String userSearch = null;
+    public static final String BookListRequestUrl =
+            "https://www.googleapis.com/books/v1/volumes?q=" + userSearch + "&maxResults=15";
+
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
 
     @Override

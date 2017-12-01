@@ -85,51 +85,49 @@ public final class QueryUtils {
         return jsonResponse;
     }
 
-    private static String fetchBookListData(String requestUrl){
+    private static String fetchBookListData(String requestUrl) {
         URL url = createUrl(requestUrl);
-        String jsonResponse = null ;
+        String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-        }catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "error closing input stream: ", e);
         }
         return jsonResponse;
     }
 
-    public static ArrayList<BookList> extractBookLists(String bookListJSON){
-        if (TextUtils.isEmpty(bookListJSON)){
+    public static ArrayList<BookList> extractBookLists(String bookListJSON) {
+        if (TextUtils.isEmpty(bookListJSON)) {
             return null;
         }
         try {
             String jsonResult = fetchBookListData(bookListJSON);
             JSONObject jsonObject = new JSONObject(jsonResult);
             JSONArray jsonArray = jsonObject.getJSONArray("items");
-            for (int i = 0; i < jsonArray.length(); i++){
+            String bookTittle;
+            String bookAuthor;
+            String publishedData;
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject bookListFeatures = jsonArray.getJSONObject(i);
                 JSONObject volumeInfo = bookListFeatures.getJSONObject("volumeInfo");
-                String bookTittle;
-                if (volumeInfo.has("title")) {
+                if (volumeInfo.getString("title") != null) {
                     bookTittle = volumeInfo.getString("title");
                 } else {
-                    bookTittle = "No Title Found1";
+                    bookTittle = "No Title Found";
                 }
-
-                String bookAuthor;
-                if (volumeInfo.has("authors")) {
+                if (volumeInfo.getString("authors") != null) {
                     bookAuthor = volumeInfo.getString("authors");
                 } else {
-                    bookAuthor = "No Author Found!";
+                    bookAuthor = "No Author Found";
                 }
-
-                String publishedData;
-                if (volumeInfo.has("publisher")) {
-                    publishedData = volumeInfo.getString("publisher");
+                if (volumeInfo.getString("publishedDate") != null) {
+                    publishedData = volumeInfo.getString("publishedDate");
                 } else {
-                    publishedData = "No Publish Date Found!";
+                    publishedData = "No Publish Date Found";
                 }
                 bookListArrayList.add(new BookList(bookTittle, bookAuthor, publishedData));
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             Log.e(TAG, "problem in parsing the book list json result: ", e);
         }
         return bookListArrayList;
