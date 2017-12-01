@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public static String userSearch = "";
     BookList bookList;
     View v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     searchFiledEditText(v);
                     Intent intent = new Intent(MainActivity.this, BookListView.class);
                     startActivity(intent);
-                    setEmptyView(v);
                 } else {
                     Toast.makeText(MainActivity.this, R.string.no_internet,
                             Toast.LENGTH_SHORT).show();
@@ -48,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
     public void searchFiledEditText(View view) {
         EditText searchFiled = findViewById(R.id.search);
         userSearch = searchFiled.getText().toString();
-    }
-
-    public void setEmptyView(View view) {
-        ListView listView = findViewById(R.id.list);
-        TextView emptyTextView = findViewById(R.id.empty_text);
-        listView.setEmptyView(emptyTextView);
     }
 
     private boolean checkIfConnectedToInternet() {
