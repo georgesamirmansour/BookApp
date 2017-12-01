@@ -1,5 +1,6 @@
 package com.example.gogos.bookapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,15 @@ public class BookListView extends AppCompatActivity {
             "https://www.googleapis.com/books/v1/volumes?q=" + MainActivity.userSearch + "&maxResults=15";
 
     ArrayList<BookList> bookListArrayList = new ArrayList<>();
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ListView listView = findViewById(R.id.list);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        listView.notify();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

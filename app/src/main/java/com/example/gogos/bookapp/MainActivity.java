@@ -15,15 +15,23 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     public static String userSearch = "";
-    BookList bookList;
-    View v;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pressOnButton();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         checkIfConnectedToInternet();
+    }
+
+    public void pressOnButton() {
         Button searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
